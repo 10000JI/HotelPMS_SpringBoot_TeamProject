@@ -13,5 +13,5 @@ public class HotelStockVO {
     private String orderStatus;
     private Long roomUsageStatus;
 
-    private RoomStockVO roomStockVO;
+    private PartnerStockVO partnerStockVO;
 }

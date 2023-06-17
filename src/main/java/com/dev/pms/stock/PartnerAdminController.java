@@ -48,6 +48,7 @@ public class PartnerAdminController {
         List<HotelStockVO>  hotelStockList = stockService.getHotelStockList();
         mv.addObject("roomTypes",roomTypes);
         mv.addObject("hotelStockList",hotelStockList);
+        log.error("::::::{}:::::",hotelStockList.get(0).getPartnerStockVO().getProductName());
         mv.setViewName("stock/stockSetting");
         return mv;
     }

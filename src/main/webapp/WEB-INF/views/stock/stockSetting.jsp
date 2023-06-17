@@ -16,23 +16,16 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" crossorigin="anonymous"></script>
     <style>
-        table {
+
+        .custom-checkbox {
             display: flex;
-            width: 100%;
-        }
-        td {
-            flex: 1;
-            text-align: center;
-        }
-        .datatable-table > thead > tr > th {
-            vertical-align: bottom;
-            text-align: center;
-            border-bottom: none;
+            align-items: center;
         }
 
-        form {
-            display: inline;
+        .custom-checkbox input[type="checkbox"] {
+            margin-right: 40px;
         }
+
     </style>
 </head>
 <body class="nav-fixed">
@@ -53,99 +46,6 @@
                 <div class="col-12 col-lg-auto mb-5 mb-lg-0 text-center text-lg-start">
                     <div class="h2 text-white mb-0">객실 별 소모품 설정</div>
                 </div>
-                <div class="col-12 col-lg-auto text-center text-lg-end">
-                    <!-- button -->
-                   <div class="h3 text-white">
-                       <%--    <button class="btn btn-dark" type="button" id="btn-reset">초기화</button>
-                          <form id="saveForm" action="/roomDetail/save" method="post">
-                              <input type="hidden" name="checkoutDate" id="updateCheckout">
-                              <input type="hidden" name="roomNumber" value="${bookingVO.roomNumber}">
-                              <input type="hidden" name="reservationNumber" value="${bookingVO.reservationNumber}">
-                              <input type="hidden" name="reservationDate" id="updateReservationDate">
-                              <input type="hidden" name="guestCount" id="updateGuestCount">
-                              <input type="hidden" name="pageName" value="${pageName}">
-                              <button class="btn btn-dark" type="button" id="btn-save">저장</button>
-                          </form>
-                         &lt;%&ndash; <a href="#"><button class="btn btn-dark" type="button">문자발송</button></a>&ndash;%&gt;
-
-                          <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalLg">문자발송</button>
-                          <div class="modal fade" id="exampleModalLg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                  <div class="modal-content">
-                                      <form id="sendForm" action="/smsMessage/ressend" method="post">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">문자발송</h5>
-                                          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                          <div class="table-responsive">
-                                              <div class="datatable-container d-flex justify-content-center align-items-center">
-                                                  <table class="datatable-table" style="font-size: 15px; width: 90%;">
-                                                      <thead>
-                                                      <tr>
-                                                          <td rowspan="3">발송내용</td>
-                                                          <c:set var="differenceInDays" value="${((bookingVO.checkoutDate.time - bookingVO.checkinDate.time) / (1000 * 60 * 60 * 24)) + 1}" />
-                                                          <td rowspan="3" style="width: 300px;">
-                                                                <textarea cols="30" rows="5" name="resTextarea" id="resTextarea">
-  ※예약안내※
-                                                                    ${bookingVO.name}고객님.
-  예약번호 : ${bookingVO.reservationNumber}
-  객실번호 : ${bookingVO.roomNumber}
-  인원수 : ${bookingVO.guestCount}
-                                                                    ${fn:substringBefore(differenceInDays, '.')}박 예약 감사합니다.
-  체크인 15시, 체크아웃 13시 입니다.
-  추가 문의 사항은 연락바랍니다.
-  -모호텔-
-    </textarea>
-                                                          </td>
-                                                          <td>수신자</td>
-                                                          <td><input type="text" readonly="readonly" name="name" value="${bookingVO.name}"></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>수신번호</td>
-                                                          <td><input type="text" readonly="readonly" name="phoneNumber" value="${bookingVO.phoneNumber}"></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>발송일자</td>
-                                                          <td><input type="text" readonly="readonly" value="${currentDate}"/></td>
-                                                      </tr>
-                                                      </thead>
-                                                  </table>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                          <button class="btn btn-dark" type="button" data-bs-dismiss="modal">취소</button>
-                                          <input type="hidden" name="pageName" value="${pageName}">
-                                          <input type="hidden" name="roomNumber" value="${bookingVO.roomNumber}">
-                                          <button class="btn btn-dark" type="button" id="btn-send">전송</button>
-                                      </div>
-                                      </form>
-                                  </div>
-                              </div>
-                          </div>
-
-
-
-                          <a href="#"><button class="btn btn-dark" type="button">알림톡발송</button></a>
-                          <c:if test="${pageName eq '예약확정'}">
-                          <form id="checkinForm" action="/roomDetail/checkInSave" method="post">
-                             <input type="hidden" name="checkinDate" value="${bookingVO.checkinDate}">
-                             <input type="hidden" name="checkoutDate" id="updateResCheckout">
-                             <input type="hidden" name="roomNumber" value="${bookingVO.roomNumber}">
-                                  <button class="btn btn-dark" type="button" id="btn-checkin">체크인</button>
-                          </form>
-                          </c:if>
-                          <c:if test="${pageName eq '재실'}">
-                          <form id="cleanAskForm" action="/roomDetail/cleanAskSave" method="post">
-                              <input type="hidden" name="checkinDate" value="${bookingVO.checkinDate}">
-                              <input type="hidden" name="checkoutDate" id="updateRoomCheckout">
-                              <input type="hidden" name="roomNumber" value="${bookingVO.roomNumber}">
-                                  <button class="btn btn-dark" type="button" id="btn-cleanask">청소요청</button>
-                          </form>
-                          </c:if>--%>
-                      </div>
-                </div>
             </div>
         </div>
         <div class="card-body p-4 p-md-5">
@@ -163,11 +63,45 @@
             </div>
             <!-- Invoice table-->
             <div class="container">
+                <div class="row">
                 <label style="margin-top: 30px; margin-bottom: 15px;">비품설정</label>
-                <div class="datatable-container">
-
+                    <div class="col-10">
+                    <div class="card border-start-lg border-dark mb-4">
+                        <div class="card-body">
+                            <table class="table table-borderless">
+                                <tbody>
+                                <c:forEach items="${hotelStockList}" var="hotelStockList">
+                                    <tr class="row" data-max-stock="${hotelStockList.currentStock}">
+                                    <td class="col-6">
+                                        <label class="custom-checkbox">
+                                            <input type="checkbox" class="myCheckbox">
+                                            ${hotelStockList.partnerStockVO.productName}(${hotelStockList.partnerStockVO.itemCode})
+                                        </label>
+                                    </td>
+                                    <td class="col-6">
+                                        <button type="button" class="btn btn-dark plusbtn"
+                                                style="border: none">+</button>
+                                        <button type="button" class="btn btn-dark minusbtn"
+                                                style="border: none">-</button>
+                                        <label>0</label>
+                                    </td>
+                                </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-9">
+                </div>
+                <div class="col-3">
+                <button class="btn btn-outline-black" type="button" id="btn-checkin" > 등록 </button>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -182,22 +116,31 @@
 <script src="/js/scripts.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/stockSetting.js"></script>
-<script>
-    $('#dropdownBtn').on('show.bs.dropdown', function () {
-        //클릭하는 순간 하위 버튼들이 보여질 때
-    })
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.plusbtn').click(function() {
+            let currentRow = $(this).closest('tr');
+            let stockLabel = currentRow.find('label:last');
+            let currentStock = parseInt(stockLabel.text());
+            let maxStock = parseInt(currentRow.attr('data-max-stock'));
 
-    $('#dropdownBtn').on('shown.bs.dropdown', function () {
-        //하위 버튼들이 다 보여지고 난 뒤
-    })
+            if(currentStock < maxStock) {
+                currentStock++;
+                stockLabel.text(currentStock);
+            }
+        });
 
-    $('#dropdownBtn').on('hide.bs.dropdown', function () {
-        //하위 버튼이 닫혔을 때
-    })
+        $('.minusbtn').click(function() {
+            let currentRow = $(this).closest('tr');
+            let stockLabel = currentRow.find('label:last');
+            let currentStock = parseInt(stockLabel.text());
 
-    $('#dropdownBtn').on('hidden.bs.dropdown', function () {
-        //하위 버튼이 닫힌 후
-    })
+            if(currentStock > 0) {
+                currentStock--;
+                stockLabel.text(currentStock);
+            }
+        });
+    });
 </script>
 </body>
 </html>

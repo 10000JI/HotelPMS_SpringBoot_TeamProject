@@ -61,7 +61,7 @@
     </select>
 
     <select id="getHotelStockList" resultMap="getHotelStock">
-        SELECT p.PRODUCTNAME , p.ITEMCODE
+        SELECT p.PRODUCTNAME , p.ITEMCODE, h.CURRENTSTOCK
         FROM HOTELSTOCK h
         INNER JOIN PARTNERSTOCK p
         USING (ITEMID)
@@ -74,9 +74,12 @@
         <result column="autoOrderQuantity" property="autoOrderQuantity"/>
         <result column="orderStatus" property="orderStatus"/>
         <result column="roomUsageStatus" property="roomUsageStatus"/>
-        <association property="roomStockVO" javaType="RoomStockVO" >
-            <id column="roomType" property="roomType"/>
-            <result column="count" property="count"/>
+        <association property="partnerStockVO" javaType="PartnerStockVO" >
+            <id column="businessNumber" property="businessNumber"/>
+            <result column="productName" property="productName"/>
+            <result column="itemCode" property="itemCode"/>
+            <result column="unit" property="unit"/>
+            <result column="unitPrice" property="unitPrice"/>
         </association>
     </resultMap>
 </mapper>

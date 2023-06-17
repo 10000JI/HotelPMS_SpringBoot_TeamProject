@@ -152,16 +152,13 @@
             <!-- Invoice table-->
             <div class="container">
                 <label style="margin-bottom: 15px;">객실타입</label>
-                <div class="datatable-container">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-black dropdown-toggle" id="dropdownFadeInUp" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fade In Up</button>
-                        <div class="dropdown-menu animated--fade-in-up" aria-labelledby="dropdownFadeInUp" style="">
-                            <a class="dropdown-item" href="#!">Action</a>
-                            <a class="dropdown-item" href="#!">Another action</a>
-                            <a class="dropdown-item" href="#!">Something else here</a>
-                        </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-black dropdown-toggle" id="selectedRoomTypeButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${roomTypes[0]}</button>
+                    <div class="dropdown-menu animated--fade-in-up" aria-labelledby="selectedRoomTypeButton">
+                        <c:forEach items="${roomTypes}" var="roomType">
+                            <a class="dropdown-item" href="#" data-roomtype="${roomType}">${roomType}</a>
+                        </c:forEach>
                     </div>
-
                 </div>
             </div>
             <!-- Invoice table-->
@@ -184,6 +181,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/stockSetting.js"></script>
 <script>
     $('#dropdownBtn').on('show.bs.dropdown', function () {
         //클릭하는 순간 하위 버튼들이 보여질 때

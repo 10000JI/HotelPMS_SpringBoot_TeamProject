@@ -29,8 +29,6 @@ public class PartnerAdminController {
     @ResponseBody
     public int stockDelete(@RequestBody List<String> businessNumbers) throws Exception{
         int result=0;
-        //boolean check = false;
-        log.error(":::::{}:::::",businessNumbers.get(0));
         for (String businessNumber : businessNumbers) {
             result = stockService.setPartnerDelete(businessNumber);
         }
@@ -40,14 +38,16 @@ public class PartnerAdminController {
     @PostMapping("partnerUpdate")
     @ResponseBody
     public int stockUpdate(String businessNumber) throws Exception{
-        log.error(":::::{}:::::",businessNumber);
-        int result = stockService.setPartnerUpdate(businessNumber);
-        return result;
+        return stockService.setPartnerUpdate(businessNumber);
     }
 
     @GetMapping("stockSetting")
     public ModelAndView setStockSetting() throws Exception {
         ModelAndView mv = new ModelAndView();
+        List<String> roomTypes = stockService.getRoomType();
+        List<HotelStockVO>  hotelStockList = stockService.getHotelStockList();
+        mv.addObject("roomTypes",roomTypes);
+        mv.addObject("hotelStockList",hotelStockList);
         mv.setViewName("stock/stockSetting");
         return mv;
     }

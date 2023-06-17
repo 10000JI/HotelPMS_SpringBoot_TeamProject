@@ -21,5 +21,7 @@ public interface StockDAO {
 
     public int setPartnerUpdate(String businessNumber) throws Exception;
 
+    public List<String> getRoomType() throws  Exception;
 
+    public List<HotelStockVO> getHotelStockList() throws  Exception;
 }

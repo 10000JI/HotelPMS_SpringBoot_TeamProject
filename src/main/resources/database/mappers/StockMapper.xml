@@ -55,4 +55,28 @@
     <update id="setPartnerUpdate" parameterType="String">
     UPDATE PARTNER SET APPROVAL =1 WHERE BUSINESSNUMBER=#{businessNumber}
     </update>
+
+    <select id="getRoomType" resultType="String">
+        SELECT ROOMTYPE FROM ROOMTYPE
+    </select>
+
+    <select id="getHotelStockList" resultMap="getHotelStock">
+        SELECT p.PRODUCTNAME , p.ITEMCODE
+        FROM HOTELSTOCK h
+        INNER JOIN PARTNERSTOCK p
+        USING (ITEMID)
+    </select>
+
+    <resultMap type="HotelStockVO" id="getHotelStock">
+        <id column="inventoryId" property="inventoryId"/>
+        <result column="itemId" property="itemId"/>
+        <result column="currentStock" property="currentStock"/>
+        <result column="autoOrderQuantity" property="autoOrderQuantity"/>
+        <result column="orderStatus" property="orderStatus"/>
+        <result column="roomUsageStatus" property="roomUsageStatus"/>
+        <association property="roomStockVO" javaType="RoomStockVO" >
+            <id column="roomType" property="roomType"/>
+            <result column="count" property="count"/>
+        </association>
+    </resultMap>
 </mapper>

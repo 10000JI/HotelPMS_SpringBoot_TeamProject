@@ -42,4 +42,12 @@ public class StockService {
         return stockDAO.setPartnerUpdate(businessNumber);
     }
 
+    public  List<String> getRoomType() throws Exception {
+        return stockDAO.getRoomType();
+    }
+
+    public List<HotelStockVO> getHotelStockList() throws  Exception{
+        return stockDAO.getHotelStockList();
+    }
+
 }

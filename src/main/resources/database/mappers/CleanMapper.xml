@@ -18,7 +18,56 @@
         DELETE
         FROM CALENDER
         WHERE SCHEDULENUMBER = #{scheduleNumber}
-
     </delete>
 
+    <select id="getTodayClean"  resultType="CalenderVO">
+        SELECT SCHEDULENUMBER
+        FROM CALENDER
+        WHERE CURRENT_DATE() BETWEEN SCHEDULESTARTDATE AND SCHEDULEENDDATE;
+    </select>
+    
+    <select id="getRequestClean" parameterType="ReservedVO" resultMap="getRequestCleanResult">
+        SELECT DISTINCT C.SCHEDULENUMBER, R.ROOMNUMBER, ROOMSTATUS
+        FROM RESERVED R
+        JOIN CALENDER C ON R.ROOMSTATUS = '청소요청' OR ROOMSTATUS = '청소중'
+        AND CURRENT_DATE() BETWEEN C.SCHEDULESTARTDATE AND C.SCHEDULEENDDATE;
+    </select>
+    
+
+
+    <update id="updateCleanStatus" parameterType="ReservedVO">
+        UPDATE RESERVED
+        SET ROOMSTATUS = '청소중'
+        WHERE ROOMNUMBER = #{roomNumber}
+        AND ROOMSTATUS = '청소요청'
+    </update>
+
+    <update id="updateCleaningInProgress" parameterType="ReservedVO">
+        UPDATE RESERVED
+        SET ROOMSTATUS = '청소중'
+        WHERE ROOMNUMBER = #{roomNumber}
+        AND ROOMSTATUS = '청소요청'
+    </update>
+
+    <update id="CleaningComplete" parameterType="ReservedVO">
+        UPDATE RESERVED
+        SET ROOMSTATUS = '재실'
+        WHERE ROOMNUMBER = #{roomNumber}
+        AND ROOMSTATUS = '청소중'
+    </update>
+
+    <resultMap type="CalenderVO" id="getRequestCleanResult">
+        <id column="scheduleNumber" property="scheduleNumber"/>
+        <result column="scheduleEnddate" property="scheduleEnddate"/>
+        <result column="scheduleStartdate" property="scheduleStartdate"/>
+
+        <collection property="reservedVOS" javaType="List" ofType="ReservedVO">
+            <id column="reservationNum" property="reservationNum"/>
+            <result column="reservationDate" property="reservationDate"/>
+            <result column="roomNumber" property="roomNumber"/>
+            <result column="roomType" property="roomType"/>
+            <result column="roomStatus" property="roomStatus"/>
+        </collection>
+
+    </resultMap>
 </mapper>

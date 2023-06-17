@@ -28,9 +28,11 @@
             crossorigin="anonymous"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/js/webSocket.js"></script>
+
+<%--    <script src="/webjars/sockjs-client/sockjs.min.js"></script>--%>
+<%--    <script src="/webjars/stomp-websocket/stomp.min.js"></script>--%>
+<%--    <script src="/js/webSocket.js"></script>--%>
+
 
 </head>
 <body class="nav-fixed">
@@ -291,164 +293,64 @@
                                     <div class="card-header">체크 리스트
 
 
-                                    </div>
-                                    <div class="card-body">
-                                        <!-- Item 1-->
-                                        <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
-                                                        class="avatar-img img-fluid"
-                                                        src="/assets/img/illustrations/profiles/profile-1.png" alt=""/>
-                                                </div>
-                                                <div class="d-flex flex-column fw-bold">
-                                                    <a class="text-dark line-height-normal mb-1" href="#!">Sid
-                                                        Rooney</a>
-                                                    <div class="small text-muted line-height-normal">Position</div>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown no-caret">
-                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
-                                                        id="dropdownPeople1" type="button" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                        data-feather="more-vertical"></i></button>
-                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
-                                                     aria-labelledby="dropdownPeople1">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
+                                        <div class="card-body">
+                                            <c:forEach var="request" items="${request}">
+                                                <c:forEach var="request2" items="${request.reservedVOS}">
+                                                    <c:if test="${request2.roomStatus eq '청소요청'}">
+                                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
+                                                                        class="avatar-img img-fluid"
+                                                                        src="/assets/img/illustrations/profiles/profile-1.png" alt=""/>
+                                                                </div>
+                                                                <div class="d-flex flex-column fw-bold">
+                                                                    <div class="text-dark line-height-normal mb-1" href="#!">청소${request.scheduleNumber}팀</div>
+                                                                    <div class="small text-muted line-height-normal">${request2.roomNumber}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown no-caret">
+                                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
+                                                                        id="dropdownPeople1" type="button" data-bs-toggle="dropdown"
+                                                                        aria-haspopup="true" aria-expanded="false"><i
+                                                                        data-feather="more-vertical"></i></button>
+                                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                                                     aria-labelledby="dropdownPeople1">
+                                                                    <a class="dropdown-item" href="#!" onclick="CleaningInProgress('${request2.roomNumber}')">청소시작</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                     </c:if>
+                                                </c:forEach>
+                                                <c:forEach var="request2" items="${request.reservedVOS}">
+                                                    <c:if test="${request2.roomStatus eq '청소중'}">
+                                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
+                                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
+                                                                        class="avatar-img img-fluid"
+                                                                        src="/assets/img/illustrations/profiles/profile-1.png" alt=""/>
+                                                                </div>
+                                                                <div class="d-flex flex-column fw-bold">
+                                                                    <div class="text-dark line-height-normal mb-1" href="#!">청소${request.scheduleNumber}팀</div>
+                                                                    <div class="small text-muted line-height-normal">${request2.roomNumber}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown no-caret">
+                                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
+                                                                        id="dropdownPeople1-2" type="button" data-bs-toggle="dropdown"
+                                                                        aria-haspopup="true" aria-expanded="false"><i
+                                                                        data-feather="more-vertical"></i></button>
+                                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                                                     aria-labelledby="dropdownPeople1">
+                                                                    <a class="dropdown-item" href="#!" onclick="CleaningComplete('${request2.roomNumber}')">청소완료</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                     </c:if>
+                                                </c:forEach>
+                                            </c:forEach>
                                         </div>
-                                        <!-- Item 2-->
-                                        <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
-                                                        class="avatar-img img-fluid"
-                                                        src="/assets/img/illustrations/profiles/profile-2.png" alt=""/>
-                                                </div>
-                                                <div class="d-flex flex-column fw-bold">
-                                                    <a class="text-dark line-height-normal mb-1" href="#!">Keelan
-                                                        Garza</a>
-                                                    <div class="small text-muted line-height-normal">Position</div>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown no-caret">
-                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
-                                                        id="dropdownPeople2" type="button" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                        data-feather="more-vertical"></i></button>
-                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
-                                                     aria-labelledby="dropdownPeople2">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Item 3-->
-                                        <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
-                                                        class="avatar-img img-fluid"
-                                                        src="/assets/img/illustrations/profiles/profile-3.png" alt=""/>
-                                                </div>
-                                                <div class="d-flex flex-column fw-bold">
-                                                    <a class="text-dark line-height-normal mb-1" href="#!">Kaia
-                                                        Smyth</a>
-                                                    <div class="small text-muted line-height-normal">Position</div>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown no-caret">
-                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
-                                                        id="dropdownPeople3" type="button" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                        data-feather="more-vertical"></i></button>
-                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
-                                                     aria-labelledby="dropdownPeople3">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Item 4-->
-                                        <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
-                                                        class="avatar-img img-fluid"
-                                                        src="/assets/img/illustrations/profiles/profile-4.png" alt=""/>
-                                                </div>
-                                                <div class="d-flex flex-column fw-bold">
-                                                    <a class="text-dark line-height-normal mb-1" href="#!">Kerri
-                                                        Kearney</a>
-                                                    <div class="small text-muted line-height-normal">Position</div>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown no-caret">
-                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
-                                                        id="dropdownPeople4" type="button" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                        data-feather="more-vertical"></i></button>
-                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
-                                                     aria-labelledby="dropdownPeople4">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Item 5-->
-                                        <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
-                                                        class="avatar-img img-fluid"
-                                                        src="/assets/img/illustrations/profiles/profile-5.png" alt=""/>
-                                                </div>
-                                                <div class="d-flex flex-column fw-bold">
-                                                    <a class="text-dark line-height-normal mb-1" href="#!">Georgina
-                                                        Findlay</a>
-                                                    <div class="small text-muted line-height-normal">Position</div>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown no-caret">
-                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
-                                                        id="dropdownPeople5" type="button" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                        data-feather="more-vertical"></i></button>
-                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
-                                                     aria-labelledby="dropdownPeople5">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Item 6-->
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center flex-shrink-0 me-3">
-                                                <div class="avatar avatar-xl me-3 bg-gray-200"><img
-                                                        class="avatar-img img-fluid"
-                                                        src="/assets/img/illustrations/profiles/profile-6.png" alt=""/>
-                                                </div>
-                                                <div class="d-flex flex-column fw-bold">
-                                                    <a class="text-dark line-height-normal mb-1" href="#!">Wilf
-                                                        Ingram</a>
-                                                    <div class="small text-muted line-height-normal">Position</div>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown no-caret">
-                                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle"
-                                                        id="dropdownPeople6" type="button" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false"><i
-                                                        data-feather="more-vertical"></i></button>
-                                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
-                                                     aria-labelledby="dropdownPeople6">
-                                                    <a class="dropdown-item" href="#!">Action</a>
-                                                    <a class="dropdown-item" href="#!">Another action</a>
-                                                    <a class="dropdown-item" href="#!">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -476,30 +378,38 @@
                     </form>
                 </div>
             </div>
-        </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                    <div class="col-md-6 text-md-end small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div>
+            <div class="row" style="margin-top: 10px">
+                <div class="col-md-12">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="private-message">Private Message</label>
+                            <input type="text" id="private-message" class="form-control" placeholder="Enter your message here...">
+                        </div>
+                        <button id="send-private" class="btn btn-default" type="button">Send Private Message</button>
+                    </form>
                 </div>
             </div>
-        </footer>
+
+            <div id="checkList">
+            </div>
+        </main>
+        <c:import url="../temp/footer.jsp"></c:import>
     </div>
 </div>
+
+
+<script src="/assets/demo/chart-area-demo.js"></script>
+<script src="/assets/demo/chart-pie-demo.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
+<script src="/js/cleanSchedule.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-<script src="/assets/demo/chart-area-demo.js"></script>
-<script src="/assets/demo/chart-pie-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
 <script src="/js/datatables/datatables-simple-demo.js"></script>
+
+
 </body>
 </html>

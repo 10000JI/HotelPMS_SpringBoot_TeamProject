@@ -1,4 +1,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--%>
+<%--<script src="/webjars/sockjs-client/sockjs.min.js"></script>--%>
+<%--<script src="/webjars/stomp-websocket/stomp.min.js"></script>--%>
+<%--<script src="/js/webSocket.js"></script>--%>
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
@@ -161,6 +165,7 @@
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name"><sec:authentication property="principal.name"/></div>
                         <div class="dropdown-user-details-email"><sec:authentication property="principal.email"/></div>
+                        <div class="dropdown-user-details-email"><sec:authentication property="principal.roleName"/></div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>

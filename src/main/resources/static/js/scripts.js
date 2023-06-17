@@ -53,7 +53,7 @@
     if (activatedPath) {
         activatedPath = activatedPath[0];
     } else {
-        activatedPath = 'index.html';
+        activatedPath = 'userLogin.jsp';
     }
 
     const targetAnchors = document.body.querySelectorAll('[href="' + activatedPath + '"].nav-link');

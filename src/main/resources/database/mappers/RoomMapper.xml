@@ -16,5 +16,7 @@
     WHERE RESERVED.RESERVATIONDATE = CURDATE();
     </select>
 
+
+
 </mapper>
 

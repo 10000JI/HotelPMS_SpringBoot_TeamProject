@@ -59,7 +59,7 @@
                                             <th>이메일</th>
                                             <th>권한</th>
                                             <th>전화번호</th>
-                                            <th>Joined Date</th>
+                                            <th>유저정보 수정</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -85,11 +85,18 @@
                                             <td>${userVO.id}</td>
                                             <td>${userVO.email}</td>
                                             <td>
-                                                <span class="badge bg-green-soft text-green">Sales</span>
-                                                <span class="badge bg-blue-soft text-blue">Developers</span>
-                                                <span class="badge bg-red-soft text-red">Marketing</span>
-                                                <span class="badge bg-purple-soft text-purple">Managers</span>
-                                                <span class="badge bg-yellow-soft text-yellow">Customer</span>
+                                                <c:if test="${userVO.roleName eq 'ROLE_MEMBER'}">
+                                                    <span class="badge bg-green-soft text-green">ROLE_MEMBER</span>
+                                                </c:if>
+                                                <c:if test="${userVO.roleName eq 'ROLE_MANAGER'}">
+                                                    <span class="badge bg-blue-soft text-blue">ROLE_MANAGER</span>
+                                                </c:if>
+                                                <c:if test="${userVO.roleName eq 'ROLE_CLEAN'}">
+                                                    <span class="badge bg-red-soft text-red">ROLE_CLEAN</span>
+                                                </c:if>
+
+<%--                                                <span class="badge bg-purple-soft text-purple">Managers</span>--%>
+<%--                                                <span class="badge bg-yellow-soft text-yellow">Customer</span>--%>
                                             </td>
                                             <td>${userVO.phoneNumber}</td>
                                             <td>

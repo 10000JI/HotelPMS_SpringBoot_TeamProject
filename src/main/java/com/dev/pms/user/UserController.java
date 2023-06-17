@@ -7,6 +7,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +28,11 @@ public class UserController {
     @GetMapping("userList")
     public ModelAndView getUserList(UserVO userVO) throws Exception{
         ModelAndView mv = new ModelAndView();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
         List<UserVO> userVOS = userService.getUserList(userVO);
+        UserDetails userInfo = userService.loadUserByUsername("id");
+        mv.addObject("userInfo",userInfo);
         mv.addObject("userVO",userVOS);
         mv.setViewName("user/userList");
         return mv;
@@ -95,5 +102,7 @@ public class UserController {
         }
         return mv;
     }
+
+
 }
 

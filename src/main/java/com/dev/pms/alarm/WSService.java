@@ -20,4 +20,9 @@ public class WSService {
         messagingTemplate.convertAndSend("/topic/messages", response);
     }
 
+    public void notifyUser(final String message) {
+        ResponseMessage response = new ResponseMessage(message);
+        messagingTemplate.convertAndSendToUser("ROLE_CLEAN", "/topic/private-messages", response);
+    }
+
 }

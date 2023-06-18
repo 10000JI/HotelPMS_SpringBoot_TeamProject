@@ -70,22 +70,22 @@
                         <div class="card-body">
                             <table class="table table-borderless">
                                 <tbody>
-                                <c:forEach items="${hotelStockList}" var="hotelStockList">
-                                    <tr class="row" data-max-stock="${hotelStockList.currentStock}">
-                                    <td class="col-6">
-                                        <label class="custom-checkbox">
-                                            <input type="checkbox" class="myCheckbox">
-                                            ${hotelStockList.partnerStockVO.productName}(${hotelStockList.partnerStockVO.itemCode})
-                                        </label>
-                                    </td>
-                                    <td class="col-6">
-                                        <button type="button" class="btn btn-dark plusbtn"
-                                                style="border: none">+</button>
-                                        <button type="button" class="btn btn-dark minusbtn"
-                                                style="border: none">-</button>
-                                        <label>0</label>
-                                    </td>
-                                </tr>
+                                <c:forEach items="${hotelStockList}" var="hotelStockList" varStatus="status">
+                                    <tr class="row" data-max-stock="${hotelStockList.currentStock}" id="row${status.index}">
+                                        <td class="col-6">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox" class="myCheckbox">
+                                                    ${hotelStockList.partnerStockVO.productName}(${hotelStockList.partnerStockVO.itemCode})
+                                            </label>
+                                        </td>
+                                        <td class="col-6">
+                                            <button type="button" class="btn btn-dark plusbtn"
+                                                    style="border: none">+</button>
+                                            <button type="button" class="btn btn-dark minusbtn"
+                                                    style="border: none">-</button>
+                                            <input type="text" id="stockLabel${status.index}" name="stockLabel${status.index}" value="0" readonly>
+                                        </td>
+                                    </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
@@ -120,7 +120,8 @@
     $(document).ready(function() {
         $('.plusbtn').click(function() {
             let currentRow = $(this).closest('tr');
-            let stockLabel = currentRow.find('label:last');
+            let rowId = currentRow.attr('id');
+            let stockLabel = $('#' + 'stockLabel' + rowId.replace('row', ''));
             let currentStock = parseInt(stockLabel.text());
             let maxStock = parseInt(currentRow.attr('data-max-stock'));
 
@@ -132,7 +133,8 @@
 
         $('.minusbtn').click(function() {
             let currentRow = $(this).closest('tr');
-            let stockLabel = currentRow.find('label:last');
+            let rowId = currentRow.attr('id');
+            let stockLabel = $('#' + 'stockLabel' + rowId.replace('row', ''));
             let currentStock = parseInt(stockLabel.text());
 
             if(currentStock > 0) {
@@ -142,5 +144,6 @@
         });
     });
 </script>
+
 </body>
 </html>
